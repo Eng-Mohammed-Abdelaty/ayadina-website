@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أيادينا | سوق الحِرف اليدوية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Amiri:wght@700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Storefront tokens - warm artisan palette */
+    --clay-900:#3B2416;
+    --clay-800:#4E2F1C;
+    --clay-700:#6B3F24;
+    --terracotta:#C1622D;
+    --terracotta-dk:#A94F20;
+    --olive:#6E7C4E;
+    --sand:#FBF4E9;
+    --sand-2:#F3E7D5;
+    --cream:#FFFDF8;
+    --ink-900:#2B2118;
+    --ink-600:#6B5D4F;
+    --ink-400:#9C8D7C;
+    --line:#E9DCC7;
+    --white:#FFFFFF;
+
+    /* Admin tokens */
+    --adm-bg:#F7F3EC;
+    --adm-sidebar-1:#2C1B10;
+    --adm-sidebar-2:#160D07;
+    --adm-accent:#C1622D;
+    --adm-accent-dim:#F7E4D5;
+    --adm-text:#2B2118;
+    --adm-sub:#8F8072;
+    --ok-fg:#4C7A3D; --ok-bg:#E4F0DE;
+    --info-fg:#3B6E93; --info-bg:#DFEBF3;
+    --warn-fg:#B4780F; --warn-bg:#FBECD1;
+    --bad-fg:#B23B2E; --bad-bg:#F8DFDA;
+
+    --radius-sm:8px;
+    --radius-md:14px;
+    --radius-lg:22px;
+    --shadow-sm: 0 1px 2px rgba(59,36,22,.07);
+    --shadow-md: 0 10px 26px rgba(59,36,22,.10);
+    --shadow-lg: 0 24px 54px rgba(59,36,22,.20);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Tajawal',sans-serif;
+    background:var(--sand);
+    color:var(--ink-900);
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  input,select{font-family:inherit;}
+  a{color:inherit;text-decoration:none;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .serif{font-family:'Amiri',serif;}
+
+  .switcher{
+    position:fixed;top:14px;left:14px;z-index:999;
+    display:flex;gap:6px;background:var(--white);
+    padding:5px;border-radius:999px;box-shadow:var(--shadow-lg);
+    border:1px solid var(--line);
+  }
+  .switcher button{
+    padding:9px 18px;border-radius:999px;font-weight:700;font-size:13.5px;
+    background:transparent;color:var(--ink-600);transition:.2s;
+  }
+  .switcher button.active{background:var(--clay-900);color:#fff;}
+  .switcher button:not(.active):hover{background:var(--sand-2);}
+
+  .view{display:none;}
+  .view.active{display:block;}
+
+  /* ============================================================
+     STOREFRONT
+  ============================================================ */
+  #store{background:var(--sand);min-height:100vh;}
+
+  .topbar{
+    background:var(--clay-900);color:#e4d3c1;font-size:12.5px;
+    padding:8px 40px;display:flex;justify-content:space-between;
+  }
+  .topbar .links{display:flex;gap:22px;}
+  .topbar .links span.hot{color:var(--terracotta);font-weight:700;}
+
+  .header{
+    background:var(--cream);padding:18px 40px;border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:22px;
+  }
+  .logo{font-size:27px;font-weight:900;color:var(--clay-900);letter-spacing:-.5px;font-family:'Amiri',serif;}
+  .logo span{color:var(--terracotta);}
+  .cart-pill{
+    display:flex;align-items:center;gap:8px;background:var(--clay-900);
+    color:#fff;padding:10px 16px;border-radius:10px;font-weight:700;font-size:14px;
+  }
+  .cart-pill .badge{background:var(--terracotta);color:#fff;
+    width:20px;height:20px;border-radius:50%;display:flex;align-items:center;
+    justify-content:center;font-size:11px;font-weight:800;}
+  .acct{color:var(--ink-600);font-size:13px;line-height:1.5;}
+  .acct b{color:var(--ink-900);display:block;font-size:13.5px;}
+  .search-wrap{flex:1;display:flex;}
+  .search-wrap select{
+    background:var(--sand-2);color:var(--ink-600);border:1px solid var(--line);
+    border-radius:10px 0 0 10px;padding:0 14px;font-size:13px;border-right:none;
+  }
+  .search-wrap input{
+    flex:1;border:1px solid var(--line);border-right:none;border-left:none;padding:12px 16px;font-size:14px;background:#fff;
+    color:var(--ink-900);
+  }
+  .search-wrap input::placeholder{color:var(--ink-400);}
+  .search-wrap button{
+    background:var(--terracotta);color:#fff;padding:0 26px;
+    border-radius:0 10px 10px 0;font-weight:800;font-size:14px;
+  }
+
+  .navbar{
+    background:var(--clay-800);padding:0 40px;display:flex;align-items:center;
+    gap:6px;
+  }
+  .navbar a{padding:14px 18px;color:#ecdfd0;font-size:14px;font-weight:600;
+    border-radius:4px;transition:.15s;white-space:nowrap;}
+  .navbar a:hover{background:rgba(255,255,255,.07);}
+  .navbar a.deal{color:var(--terracotta);}
+  .navbar .all-cats{
+    margin-right:auto;background:var(--terracotta);color:#fff;
+    padding:14px 22px;font-weight:800;border-radius:6px;
+  }
+
+  .hero-section{
+    display:grid;grid-template-columns:340px 1fr;gap:24px;
+    padding:28px 40px;
+  }
+  .promo-stack{display:flex;flex-direction:column;gap:16px;}
+  .promo-card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius-md);
+    padding:20px;box-shadow:var(--shadow-sm);
+  }
+  .promo-card h4{margin:0 0 6px;font-size:16px;font-weight:800;}
+  .promo-card p{margin:0 0 10px;color:var(--ink-600);font-size:13px;}
+  .promo-card .cta{color:var(--terracotta-dk);font-weight:700;font-size:13px;}
+
+  .hero-banner{
+    background:linear-gradient(120deg,var(--clay-900) 10%,var(--clay-700) 100%);
+    border-radius:var(--radius-lg);padding:44px;color:#fff;
+    display:flex;flex-direction:column;justify-content:center;gap:14px;
+    position:relative;overflow:hidden;
+  }
+  .hero-banner::after{
+    content:"";position:absolute;left:-60px;bottom:-80px;width:280px;height:280px;
+    background:radial-gradient(circle,rgba(193,98,45,.35),transparent 70%);
+  }
+  .hero-tag{
+    background:rgba(255,255,255,.14);align-self:flex-start;padding:6px 14px;
+    border-radius:999px;font-size:12px;font-weight:700;
+  }
+  .hero-banner h1{font-size:36px;margin:0;font-weight:900;line-height:1.3;max-width:520px;font-family:'Amiri',serif;}
+  .hero-banner p{margin:0;color:#e2d1bd;max-width:480px;font-size:14.5px;}
+  .hero-cta{
+    align-self:flex-start;background:var(--terracotta);color:#fff;
+    padding:13px 26px;border-radius:10px;font-weight:800;font-size:14px;
+    margin-top:6px;
+  }
+
+  .section-head{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:0 40px;margin:34px 0 16px;
+  }
+  .section-head h2{font-size:20px;margin:0;font-weight:800;}
+  .section-head a{color:var(--terracotta-dk);font-size:13.5px;font-weight:700;}
+
+  .cat-grid{
+    display:grid;grid-template-columns:repeat(6,1fr);gap:16px;padding:0 40px;
+  }
+  .cat-card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius-md);
+    padding:26px 10px;text-align:center;box-shadow:var(--shadow-sm);
+    transition:.2s;cursor:pointer;
+  }
+  .cat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+  .cat-card .ic{
+    width:56px;height:56px;border-radius:50%;background:var(--sand-2);
+    display:flex;align-items:center;justify-content:center;margin:0 auto 12px;
+    font-size:24px;
+  }
+  .cat-card span{font-weight:700;font-size:13.5px;}
+
+  .artisan-strip{
+    margin:34px 40px 0;background:var(--olive);border-radius:var(--radius-lg);
+    padding:18px 26px;display:flex;justify-content:space-between;align-items:center;
+    color:#fff;
+  }
+  .artisan-strip .l{display:flex;align-items:center;gap:14px;}
+  .artisan-strip h3{margin:0;font-size:16px;}
+  .artisan-strip p{margin:0;color:#e4ead9;font-size:12.5px;}
+  .avatars{display:flex;}
+  .avatars .av{width:38px;height:38px;border-radius:50%;background:#fff;color:var(--olive);
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;
+    border:2px solid var(--olive);margin-right:-10px;}
+
+  .prod-grid{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:18px;padding:0 40px;
+  }
+  .prod-card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius-md);
+    overflow:hidden;box-shadow:var(--shadow-sm);position:relative;
+    display:flex;flex-direction:column;transition:.2s;
+  }
+  .prod-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);}
+  .prod-card .tag{
+    position:absolute;top:10px;right:10px;background:var(--bad-fg);
+    color:#fff;font-size:11px;font-weight:800;padding:3px 9px;border-radius:6px;
+  }
+  .prod-card .tag.new{background:var(--olive);}
+  .prod-card .tag.hand{background:var(--terracotta);}
+  .prod-thumb{
+    height:130px;background:var(--sand-2);display:flex;align-items:center;
+    justify-content:center;font-size:42px;
+  }
+  .prod-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1;}
+  .prod-body h4{margin:0;font-size:13.5px;font-weight:700;line-height:1.4;min-height:38px;}
+  .maker{font-size:11.5px;color:var(--ink-400);}
+  .stars{color:var(--terracotta);font-size:12px;}
+  .stars span{color:var(--ink-400);font-weight:600;margin-right:4px;}
+  .price-row{display:flex;align-items:baseline;gap:8px;margin-top:auto;}
+  .price-row .now{font-size:17px;font-weight:900;color:var(--clay-900);}
+  .price-row .was{font-size:12px;color:var(--ink-400);text-decoration:line-through;}
+  .add-btn{
+    background:var(--clay-900);color:#fff;padding:10px;border-radius:8px;
+    font-weight:700;font-size:13px;text-align:center;
+  }
+  .add-btn:hover{background:var(--clay-800);}
+
+  footer{margin-top:50px;background:var(--clay-900);color:#c9b8a5;padding:44px 40px 20px;}
+  .foot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+  .foot-grid h5{color:#fff;font-size:14.5px;margin:0 0 14px;}
+  .foot-grid a,.foot-grid div{display:block;font-size:13px;margin-bottom:10px;color:#b2a08d;}
+  .foot-bottom{
+    margin-top:34px;padding-top:18px;border-top:1px solid rgba(255,255,255,.09);
+    font-size:12px;text-align:center;color:#8a7864;
+  }
+
+  /* ============================================================
+     ADMIN DASHBOARD
+  ============================================================ */
+  #admin{background:var(--adm-bg);}
+  #admin-inner{display:flex;min-height:100vh;}
+  .adm-sidebar{
+    width:260px;flex-shrink:0;background:linear-gradient(180deg,var(--adm-sidebar-1),var(--adm-sidebar-2));
+    color:#d6c6b4;padding:22px 0;display:flex;flex-direction:column;
+    position:sticky;top:0;height:100vh;
+  }
+  .adm-brand{display:flex;align-items:center;gap:10px;padding:0 22px 22px;
+    border-bottom:1px solid rgba(255,255,255,.09);margin-bottom:16px;}
+  .adm-brand .mark{width:34px;height:34px;border-radius:9px;background:var(--adm-accent);
+    display:flex;align-items:center;justify-content:center;font-size:16px;}
+  .adm-brand b{color:#fff;font-size:16px;font-family:'Amiri',serif;}
+  .adm-group-label{font-size:11px;color:#7a6a58;font-weight:800;letter-spacing:.06em;
+    padding:14px 22px 8px;text-transform:uppercase;}
+  .adm-nav-item{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:11px 22px;font-size:14px;font-weight:600;color:#d6c6b4;
+    border-right:3px solid transparent;transition:.15s;
+  }
+  .adm-nav-item .lbl{display:flex;align-items:center;gap:10px;}
+  .adm-nav-item:hover{background:rgba(255,255,255,.05);}
+  .adm-nav-item.active{
+    background:rgba(193,98,45,.22);border-color:var(--adm-accent);color:#fff;
+  }
+  .adm-sidebar-foot{
+    margin-top:auto;padding:16px 22px 4px;border-top:1px solid rgba(255,255,255,.09);
+    display:flex;align-items:center;gap:10px;
+  }
+  .avatar-chip{
+    width:34px;height:34px;border-radius:50%;background:var(--adm-accent);
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:13px;
+  }
+  .adm-sidebar-foot div{font-size:12.5px;color:#fff;}
+  .adm-sidebar-foot small{color:#8a7a68;font-size:11px;}
+
+  .adm-main{flex:1;padding:22px 34px 60px;min-width:0;}
+  .adm-topbar{display:flex;justify-content:space-between;align-items:flex-start;
+    margin-bottom:22px;}
+  .adm-topbar .titles h1{font-size:22px;margin:0 0 4px;font-weight:800;}
+  .adm-topbar .titles p{margin:0;color:var(--adm-sub);font-size:13px;}
+  .adm-search{
+    display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);
+    border-radius:10px;padding:9px 14px;width:260px;color:var(--adm-sub);font-size:13px;
+  }
+
+  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px;}
+  .kpi-card{background:#fff;border-radius:var(--radius-md);padding:20px;
+    box-shadow:var(--shadow-sm);border:1px solid var(--line);}
+  .kpi-card .ic{width:38px;height:38px;border-radius:9px;background:var(--adm-accent-dim);
+    color:var(--adm-accent);display:flex;align-items:center;justify-content:center;
+    font-size:17px;margin-bottom:14px;}
+  .kpi-card .val{font-size:26px;font-weight:900;margin-bottom:4px;}
+  .kpi-card .lbl{font-size:12.5px;color:var(--adm-sub);margin-bottom:10px;}
+  .kpi-card .delta{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px;display:inline-block;}
+  .delta.up{color:var(--ok-fg);background:var(--ok-bg);}
+  .delta.down{color:var(--bad-fg);background:var(--bad-bg);}
+
+  .adm-grid-2{display:grid;grid-template-columns:1fr 1.6fr;gap:16px;margin-bottom:20px;}
+  .panel{background:#fff;border-radius:var(--radius-md);border:1px solid var(--line);
+    box-shadow:var(--shadow-sm);padding:20px;}
+  .panel h3{margin:0 0 14px;font-size:15px;font-weight:800;display:flex;justify-content:space-between;}
+  .panel h3 a{color:var(--adm-accent);font-size:12.5px;font-weight:700;}
+  .activity-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);}
+  .activity-item:last-child{border:none;}
+  .dot{width:8px;height:8px;border-radius:50%;margin-top:6px;flex-shrink:0;}
+  .dot.g{background:var(--ok-fg);} .dot.b{background:var(--info-fg);} .dot.r{background:var(--bad-fg);}
+  .activity-item b{display:block;font-size:13px;}
+  .activity-item small{color:var(--adm-sub);font-size:11.5px;}
+
+  .bars{display:flex;align-items:flex-end;gap:14px;height:170px;padding-top:10px;}
+  .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end;}
+  .bar-col .bar{width:100%;background:var(--adm-accent);border-radius:8px 8px 0 0;
+    opacity:.85;transition:.2s;}
+  .bar-col:hover .bar{opacity:1;}
+  .bar-col span{font-size:11.5px;color:var(--adm-sub);font-weight:700;}
+
+  table.adm-table{width:100%;border-collapse:collapse;}
+  table.adm-table th{
+    text-align:right;font-size:11.5px;color:var(--adm-sub);font-weight:800;
+    text-transform:uppercase;letter-spacing:.03em;padding:0 10px 12px;border-bottom:1px solid var(--line);
+  }
+  table.adm-table td{padding:14px 10px;font-size:13.5px;border-bottom:1px solid var(--line);}
+  table.adm-table tr:last-child td{border-bottom:none;}
+  .cust-cell{display:flex;align-items:center;gap:10px;}
+  .cust-cell .av{width:30px;height:30px;border-radius:50%;background:var(--adm-accent-dim);
+    color:var(--adm-accent);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+  .status-badge{padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700;display:inline-block;}
+  .status-badge.paid{color:var(--ok-fg);background:var(--ok-bg);}
+  .status-badge.shipped{color:var(--info-fg);background:var(--info-bg);}
+  .status-badge.processing{color:var(--warn-fg);background:var(--warn-bg);}
+  .status-badge.cancelled{color:var(--bad-fg);background:var(--bad-bg);}
+  .status-badge.active{color:var(--ok-fg);background:var(--ok-bg);}
+  .status-badge.paused{color:var(--bad-fg);background:var(--bad-bg);}
+  .status-badge.expired{color:var(--adm-sub);background:#EEEAE2;}
+
+  .link-btn{color:var(--adm-accent);font-weight:700;font-size:12.5px;}
+  .icon-btn{padding:7px 14px;border-radius:8px;font-size:12.5px;font-weight:700;}
+  .icon-btn.primary{background:var(--adm-accent);color:#fff;}
+  .icon-btn.ghost{background:#fff;border:1px solid var(--line);color:var(--adm-text);}
+  .icon-btn.danger{background:var(--bad-bg);color:var(--bad-fg);}
+  .icon-btn.mini{background:var(--adm-accent-dim);color:var(--adm-accent);}
+
+  .page-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+  .btn-add{background:var(--adm-accent);color:#fff;padding:12px 20px;border-radius:10px;
+    font-weight:700;font-size:13.5px;box-shadow:0 6px 16px rgba(193,98,45,.35);}
+  .btn-add:hover{background:var(--terracotta-dk);}
+  .filter-input{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 16px;
+    font-size:13px;min-width:260px;}
+
+  .adm-page{display:none;}
+  .adm-page.active{display:block;}
+
+  .thumb-cell{width:40px;height:40px;border-radius:8px;background:var(--adm-accent-dim);
+    display:flex;align-items:center;justify-content:center;font-size:16px;}
+
+  /* Modal */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(43,33,24,.55);display:none;
+    align-items:center;justify-content:center;z-index:2000;backdrop-filter:blur(2px);
+  }
+  .modal-overlay.open{display:flex;}
+  .modal{
+    background:#fff;border-radius:var(--radius-lg);width:560px;max-width:92vw;
+    padding:30px 32px;box-shadow:var(--shadow-lg);max-height:88vh;overflow:auto;
+  }
+  .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;}
+  .modal-head h3{margin:0;font-size:18px;font-weight:800;}
+  .modal-close{width:32px;height:32px;border-radius:8px;background:var(--adm-bg);
+    display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--adm-sub);}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+  .form-grid.full{grid-template-columns:1fr;}
+  .field label{display:block;font-size:12.5px;font-weight:700;color:var(--adm-sub);margin-bottom:7px;}
+  .field input,.field select{
+    width:100%;border:1px solid var(--line);border-radius:9px;padding:11px 13px;
+    font-size:13.5px;color:var(--adm-text);background:#fbf9f5;
+  }
+  .field input:focus,.field select:focus{outline:2px solid var(--adm-accent);background:#fff;}
+  .checks{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px;}
+  .checks label{display:flex;align-items:center;gap:8px;}
+  .modal-submit{margin-top:8px;background:var(--adm-accent);color:#fff;padding:13px 26px;
+    border-radius:10px;font-weight:700;font-size:14px;}
+
+  @media(max-width:1100px){
+    .cat-grid,.prod-grid{grid-template-columns:repeat(3,1fr);}
+    .hero-section{grid-template-columns:1fr;}
+    .kpi-grid{grid-template-columns:repeat(2,1fr);}
+    .adm-grid-2{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="switcher">
+  <button id="btn-store" class="active" onclick="showApp('store')">🧵 المتجر</button>
+  <button id="btn-admin" onclick="showApp('admin')">🛠 لوحة التحكم</button>
+</div>
+
+<!-- =========================================================
+     STOREFRONT
+========================================================== -->
+<div id="store" class="view active">
+
+  <div class="topbar">
+    <div class="links">
+      <span>🌿 كل قطعة مصنوعة يدوياً بواسطة حرفيين مصريين</span>
+    </div>
+    <div class="links">
+      <span>📍 التوصيل إلى: القاهرة</span>
+      <span>مساعدة</span>
+      <span>تتبع طلبك</span>
+    </div>
+  </div>
+
+  <div class="header">
+    <div class="logo">أياد<span>ينا</span></div>
+    <div class="search-wrap">
+      <select><option>كل الحرف</option></select>
+      <input placeholder="ابحث عن منتج يدوي، حرفي أو خامة...">
+      <button>بحث</button>
+    </div>
+    <div class="acct">
+      <b>مرحباً، سجل الدخول</b>
+      طلباتي وقائمة الأمنيات
+    </div>
+    <div class="cart-pill">🧺 السلة <span class="badge">2</span></div>
+  </div>
+
+  <div class="navbar">
+    <a class="all-cats">☰ كل الحرف</a>
+    <a href="#" style="color:var(--terracotta);">✨ قطع مميزة</a>
+    <a href="#">🏺 فخار وسيراميك</a>
+    <a href="#">🧶 نسيج وسجاد</a>
+    <a href="#">🪵 أعمال خشبية</a>
+    <a href="#">💍 مجوهرات يدوية</a>
+    <a href="#">👜 جلود مشغولة</a>
+    <a href="#">🕯 ديكور منزلي</a>
+  </div>
+
+  <div class="hero-section">
+    <div class="promo-stack">
+      <div class="promo-card">
+        <h4>خصم 20% على الفخار والسيراميك</h4>
+        <p>قطع مصنوعة يدوياً من الفيوم وأسوان</p>
+        <span class="cta">عرض المنتجات ←</span>
+      </div>
+      <div class="promo-card">
+        <h4>وصل حديثاً: سجاد صعيدي أصيل</h4>
+        <p>نسج يدوي بألوان طبيعية</p>
+        <span class="cta">اكتشف المزيد ←</span>
+      </div>
+    </div>
+    <div class="hero-banner">
+      <span class="hero-tag">دعم الحرفيين المصريين</span>
+      <h1 class="serif">حكاية كل قطعة تُصنع بيد صانعها</h1>
+      <p>فخار، نسيج، خشب، جلود ومجوهرات يدوية من ورش صغيرة في كل ربوع مصر – كل قطعة فريدة بتوقيع صانعها.</p>
+      <span class="hero-cta">تسوق الآن ←</span>
+    </div>
+  </div>
+
+  <div class="section-head"><h2>تسوق حسب الحرفة</h2><a href="#">عرض كل الحرف ←</a></div>
+  <div class="cat-grid">
+    <div class="cat-card"><div class="ic">🏺</div><span>فخار وسيراميك</span></div>
+    <div class="cat-card"><div class="ic">🧶</div><span>نسيج وسجاد</span></div>
+    <div class="cat-card"><div class="ic">🪵</div><span>أعمال خشبية</span></div>
+    <div class="cat-card"><div class="ic">💍</div><span>مجوهرات يدوية</span></div>
+    <div class="cat-card"><div class="ic">👜</div><span>جلود مشغولة</span></div>
+    <div class="cat-card"><div class="ic">🕯</div><span>ديكور منزلي</span></div>
+  </div>
+
+  <div class="artisan-strip">
+    <div class="l">
+      <span style="font-size:22px;">🤝</span>
+      <div><h3>من صنع حرفيينا هذا الأسبوع</h3><p>142 صانع وصانعة من 12 محافظة</p></div>
+    </div>
+    <div class="avatars">
+      <div class="av">سم</div><div class="av">من</div><div class="av">هش</div><div class="av">لع</div>
+    </div>
+  </div>
+
+  <div class="section-head"><h2>الأكثر طلباً</h2><a href="#">عرض الكل ←</a></div>
+  <div class="prod-grid">
+    <div class="prod-card">
+      <span class="tag hand">صنع يدوي</span>
+      <div class="prod-thumb">🏺</div>
+      <div class="prod-body">
+        <h4>مزهرية فخارية مرسومة يدوياً بنقوش فرعونية</h4>
+        <div class="maker">صنع: ورشة أم كلثوم – الفيوم</div>
+        <div class="stars">★★★★★ <span>(96)</span></div>
+        <div class="price-row"><span class="now">380 ج.م</span></div>
+        <div class="add-btn">أضف إلى السلة</div>
+      </div>
+    </div>
+    <div class="prod-card">
+      <span class="tag">-20%</span>
+      <div class="prod-thumb">🧶</div>
+      <div class="prod-body">
+        <h4>سجادة صوف منسوجة يدوياً بألوان طبيعية 150×90</h4>
+        <div class="maker">صنع: نساجو نجع حمادي</div>
+        <div class="stars">★★★★★ <span>(58)</span></div>
+        <div class="price-row"><span class="now">1240 ج.م</span><span class="was">1550 ج.م</span></div>
+        <div class="add-btn">أضف إلى السلة</div>
+      </div>
+    </div>
+    <div class="prod-card">
+      <div class="prod-thumb">🪵</div>
+      <div class="prod-body">
+        <h4>صندوق خشبي مطعّم بالصدف - تحفة يدوية</h4>
+        <div class="maker">صنع: ورشة الأرابيسك – دمياط</div>
+        <div class="stars">★★★★★ <span>(140)</span></div>
+        <div class="price-row"><span class="now">720 ج.م</span><span class="was">890 ج.م</span></div>
+        <div class="add-btn">أضف إلى السلة</div>
+      </div>
+    </div>
+    <div class="prod-card">
+      <span class="tag new">جديد</span>
+      <div class="prod-thumb">💍</div>
+      <div class="prod-body">
+        <h4>طقم مجوهرات فضة مطعّمة بالفيروز صناعة يدوية</h4>
+        <div class="maker">صنع: مشغولات سيناء</div>
+        <div class="stars">★★★★★ <span>(73)</span></div>
+        <div class="price-row"><span class="now">650 ج.م</span></div>
+        <div class="add-btn">أضف إلى السلة</div>
+      </div>
+    </div>
+    <div class="prod-card">
+      <span class="tag">-15%</span>
+      <div class="prod-thumb">👜</div>
+      <div class="prod-body">
+        <h4>حقيبة جلد طبيعي مدبوغ يدوياً بنقش خيامية</h4>
+        <div class="maker">صنع: دباغة خان الخليلي</div>
+        <div class="stars">★★★★★ <span>(211)</span></div>
+        <div class="price-row"><span class="now">980 ج.م</span><span class="was">1150 ج.م</span></div>
+        <div class="add-btn">أضف إلى السلة</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="foot-grid">
+      <div>
+        <h5>طرق الدفع</h5>
+        <div>💳 فيزا / ماستركارد</div>
+        <div>🔶 محافظ إلكترونية</div>
+        <div>💵 الدفع عند الاستلام</div>
+      </div>
+      <div>
+        <h5>حسابي</h5>
+        <a href="#">تسجيل الدخول</a>
+        <a href="#">طلباتي والفواتير</a>
+        <a href="#">المحفظة الإلكترونية</a>
+        <a href="#">قائمة الأمنيات</a>
+      </div>
+      <div>
+        <h5>خدمة العملاء</h5>
+        <a href="#">تتبع الطلب</a>
+        <a href="#">سياسة الاسترجاع</a>
+        <a href="#">الشحن والتوصيل</a>
+        <a href="#">تواصل معنا</a>
+      </div>
+      <div>
+        <h5>أيادينا</h5>
+        <a href="#">قصتنا</a>
+        <a href="#">انضم كحرفي</a>
+        <a href="#">كل الحرف</a>
+        <a href="#">بطاقات الهدايا</a>
+      </div>
+    </div>
+    <div class="foot-bottom">© 2026 أيادينا – سوق الحِرف اليدوية المصرية</div>
+  </footer>
+</div>
+
+<!-- =========================================================
+     ADMIN DASHBOARD
+========================================================== -->
+<div id="admin" class="view">
+<div id="admin-inner">
+  <aside class="adm-sidebar">
+    <div class="adm-brand"><div class="mark">🧵</div><b>أيادينا</b></div>
+
+    <div class="adm-group-label">عام</div>
+    <div class="adm-nav-item active" data-page="dashboard" onclick="showAdminPage('dashboard',this)">
+      <span class="lbl">📊 لوحة القيادة</span></div>
+    <div class="adm-nav-item" data-page="orders" onclick="showAdminPage('orders',this)">
+      <span class="lbl">🧾 الطلبات والفواتير</span></div>
+    <div class="adm-nav-item" data-page="wallet" onclick="showAdminPage('wallet',this)">
+      <span class="lbl">💳 المدفوعات والمحافظ</span></div>
+
+    <div class="adm-group-label">إدارة المتجر</div>
+    <div class="adm-nav-item" data-page="products" onclick="showAdminPage('products',this)">
+      <span class="lbl">📦 المنتجات اليدوية</span></div>
+    <div class="adm-nav-item" data-page="categories" onclick="showAdminPage('categories',this)">
+      <span class="lbl">🗂 الحِرف والأقسام</span></div>
+    <div class="adm-nav-item" data-page="offers" onclick="showAdminPage('offers',this)">
+      <span class="lbl">🏷 العروض والخصومات</span></div>
+
+    <div class="adm-group-label">المستخدمون</div>
+    <div class="adm-nav-item" data-page="artisans" onclick="showAdminPage('artisans',this)">
+      <span class="lbl">🧑‍🎨 الحرفيون</span></div>
+    <div class="adm-nav-item" data-page="customers" onclick="showAdminPage('customers',this)">
+      <span class="lbl">👤 العملاء</span></div>
+    <div class="adm-nav-item" data-page="team" onclick="showAdminPage('team',this)">
+      <span class="lbl">🛡 فريق التحكم والصلاحيات</span></div>
+
+    <div class="adm-group-label">النظام</div>
+    <div class="adm-nav-item" data-page="settings" onclick="showAdminPage('settings',this)">
+      <span class="lbl">⚙️ الإعدادات</span></div>
+
+    <div class="adm-sidebar-foot">
+      <div class="avatar-chip">SA</div>
+      <div><div>Super Admin</div><small>admin@ayadina.com</small></div>
+    </div>
+  </aside>
+
+  <main class="adm-main">
+
+    <!-- ---------- DASHBOARD ---------- -->
+    <section class="adm-page active" id="page-dashboard">
+      <div class="adm-topbar">
+        <div class="titles"><h1>لوحة القيادة</h1><p>نظرة عامة على أداء السوق اليوم – السبت، 29 أغسطس 2026</p></div>
+        <div class="adm-search">🔍 بحث سريع...</div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="ic">🧑‍🎨</div><div class="val">142</div>
+          <div class="lbl">حرفي مسجل</div><span class="delta up">▲ 9 حرفيين جدد هذا الشهر</span></div>
+        <div class="kpi-card"><div class="ic">📦</div><div class="val">618</div>
+          <div class="lbl">منتج يدوي نشط</div><span class="delta down">▼ 5 قطع نفدت</span></div>
+        <div class="kpi-card"><div class="ic">🧾</div><div class="val">734</div>
+          <div class="lbl">إجمالي الطلبات</div><span class="delta up">▲ 6.4% عن الأسبوع الماضي</span></div>
+        <div class="kpi-card"><div class="ic">💰</div><div class="val">96,540 ج.م</div>
+          <div class="lbl">إجمالي الإيرادات</div><span class="delta up">▲ 9.8% عن الأسبوع الماضي</span></div>
+      </div>
+
+      <div class="adm-grid-2">
+        <div class="panel">
+          <h3>نشاط حديث</h3>
+          <div class="activity-item"><span class="dot g"></span><div><b>طلب جديد #CR-4821</b><small>تم الدفع عبر المحفظة الإلكترونية – منذ 6 دقائق</small></div></div>
+          <div class="activity-item"><span class="dot b"></span><div><b>مخزون منخفض</b><small>مزهرية فخارية مرسومة – تبقّى قطعتان فقط</small></div></div>
+          <div class="activity-item"><span class="dot b"></span><div><b>حرفي جديد انضم</b><small>ورشة "خيوط الصعيد" – منذ ساعة</small></div></div>
+          <div class="activity-item"><span class="dot r"></span><div><b>طلب مُلغى #CR-4809</b><small>ألغاه العميل قبل الشحن</small></div></div>
+        </div>
+        <div class="panel">
+          <h3>المبيعات خلال آخر 7 أيام <a href="#">عرض التقرير الكامل ←</a></h3>
+          <div class="bars">
+            <div class="bar-col"><div class="bar" style="height:70%;"></div><span>جمعة</span></div>
+            <div class="bar-col"><div class="bar" style="height:95%;"></div><span>خميس</span></div>
+            <div class="bar-col"><div class="bar" style="height:82%;"></div><span>أربعاء</span></div>
+            <div class="bar-col"><div class="bar" style="height:100%;"></div><span>ثلاثاء</span></div>
+            <div class="bar-col"><div class="bar" style="height:55%;"></div><span>إثنين</span></div>
+            <div class="bar-col"><div class="bar" style="height:64%;"></div><span>أحد</span></div>
+            <div class="bar-col"><div class="bar" style="height:48%;"></div><span>سبت</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>أحدث الطلبات <a href="#">عرض كل الطلبات ←</a></h3>
+        <table class="adm-table">
+          <thead><tr><th>رقم الطلب</th><th>العميل</th><th>الحرفة</th><th>الإجمالي</th><th>طريقة الدفع</th><th>الحالة</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">CR-4821</td><td class="cust-cell"><span class="av">نه</span>نهى سامي</td><td>فخار وسيراميك</td><td>380 ج.م</td><td>محفظة إلكترونية</td><td><span class="status-badge paid">مدفوع</span></td></tr>
+            <tr><td class="mono">CR-4820</td><td class="cust-cell"><span class="av">يو</span>يوسف عادل</td><td>جلود مشغولة</td><td>980 ج.م</td><td>بطاقة ائتمان</td><td><span class="status-badge shipped">تم الشحن</span></td></tr>
+            <tr><td class="mono">CR-4817</td><td class="cust-cell"><span class="av">من</span>منة الله</td><td>نسيج وسجاد</td><td>1,240 ج.م</td><td>الدفع عند الاستلام</td><td><span class="status-badge processing">قيد التجهيز</span></td></tr>
+            <tr><td class="mono">CR-4809</td><td class="cust-cell"><span class="av">عب</span>عبدالرحمن</td><td>أعمال خشبية</td><td>720 ج.م</td><td>بطاقة ائتمان</td><td><span class="status-badge cancelled">ملغى</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ---------- ORDERS ---------- -->
+    <section class="adm-page" id="page-orders">
+      <div class="adm-topbar">
+        <div class="titles"><h1>الطلبات والفواتير</h1><p>متابعة كل الطلبات، تحديث الحالة، وتحميل الفواتير الإلكترونية</p></div>
+      </div>
+      <div class="page-toolbar">
+        <select class="filter-input" style="min-width:140px;"><option>كل الحالات</option></select>
+        <input class="filter-input" placeholder="بحث برقم الطلب أو اسم العميل...">
+      </div>
+      <div class="panel" style="padding:0;">
+        <table class="adm-table" style="padding:10px 10px 0;">
+          <thead><tr><th style="padding-right:20px;">رقم الطلب</th><th>العميل</th><th>الإجمالي</th><th>طريقة الدفع</th><th>الدفع</th><th>الحالة</th><th>الفاتورة</th></tr></thead>
+          <tbody>
+            <tr><td class="mono" style="padding-right:20px;">CR-4821</td><td>نهى سامي</td><td>380 ج.م</td><td>محفظة إلكترونية</td><td><span class="status-badge paid">مدفوع</span></td><td><select class="filter-input" style="min-width:140px;padding:8px 10px;"><option>قيد المعالجة</option></select></td><td><button class="icon-btn ghost">تحميل PDF</button></td></tr>
+            <tr><td class="mono" style="padding-right:20px;">CR-4820</td><td>يوسف عادل</td><td>980 ج.م</td><td>بطاقة ائتمان</td><td><span class="status-badge paid">مدفوع</span></td><td><select class="filter-input" style="min-width:140px;padding:8px 10px;"><option>تم الشحن</option></select></td><td><button class="icon-btn ghost">تحميل PDF</button></td></tr>
+            <tr><td class="mono" style="padding-right:20px;">CR-4817</td><td>منة الله</td><td>1,240 ج.م</td><td>عند الاستلام</td><td><span class="status-badge processing">غير مدفوع</span></td><td><select class="filter-input" style="min-width:140px;padding:8px 10px;"><option>قيد التجهيز</option></select></td><td><span style="color:var(--adm-sub);font-size:12.5px;">لم تُصدر بعد</span></td></tr>
+            <tr><td class="mono" style="padding-right:20px;">CR-4809</td><td>عبدالرحمن</td><td>720 ج.م</td><td>بطاقة ائتمان</td><td><span class="status-badge cancelled">غير مدفوع</span></td><td><select class="filter-input" style="min-width:140px;padding:8px 10px;"><option>ملغى</option></select></td><td><span style="color:var(--adm-sub);">–</span></td></tr>
+            <tr><td class="mono" style="padding-right:20px;">CR-4801</td><td>سارة فتحي</td><td>650 ج.م</td><td>محفظة إلكترونية</td><td><span class="status-badge paid">مدفوع</span></td><td><select class="filter-input" style="min-width:140px;padding:8px 10px;"><option>تم التسليم</option></select></td><td><button class="icon-btn ghost">تحميل PDF</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ---------- WALLET ---------- -->
+    <section class="adm-page" id="page-wallet">
+      <div class="adm-topbar">
+        <div class="titles"><h1>المدفوعات والمحافظ</h1><p>متابعة طرق الدفع، حركات المحفظة الإلكترونية، والتسويات اليدوية</p></div>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="val">96,540 ج.م</div><div class="lbl">إجمالي الإيرادات المحصلة</div></div>
+        <div class="kpi-card"><div class="val">14,220 ج.م</div><div class="lbl">عند الاستلام · 52 عملية</div></div>
+        <div class="kpi-card"><div class="val">38,900 ج.م</div><div class="lbl">محفظة إلكترونية · 121 عملية</div></div>
+        <div class="kpi-card"><div class="val">43,420 ج.م</div><div class="lbl">بطاقة ائتمان · 96 عملية</div></div>
+      </div>
+      <div class="panel" style="margin-bottom:16px;">
+        <h3>محافظ العملاء الإلكترونية</h3>
+        <table class="adm-table">
+          <thead><tr><th>العميل</th><th>البريد الإلكتروني</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>نهى سامي</td><td class="mono">noha.s@mail.com</td><td><button class="icon-btn mini" onclick="openModal('modal-wallet')">تسوية رصيد</button></td></tr>
+            <tr><td>يوسف عادل</td><td class="mono">yousef.a@mail.com</td><td><button class="icon-btn mini" onclick="openModal('modal-wallet')">تسوية رصيد</button></td></tr>
+            <tr><td>سارة فتحي</td><td class="mono">sara.f@mail.com</td><td><button class="icon-btn mini" onclick="openModal('modal-wallet')">تسوية رصيد</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="panel">
+        <h3>آخر حركات المحفظة</h3>
+        <table class="adm-table">
+          <thead><tr><th>العميل</th><th>النوع</th><th>المبلغ</th><th>السبب</th><th>الرصيد بعدها</th><th>التاريخ</th></tr></thead>
+          <tbody>
+            <tr><td>نهى سامي</td><td><span class="status-badge cancelled">خصم</span></td><td>380 ج.م</td><td>دفع قيمة طلب</td><td>140 ج.م</td><td class="mono">22/08/2026</td></tr>
+            <tr><td>عبدالرحمن</td><td><span class="status-badge active">إضافة</span></td><td>150 ج.م</td><td>تعويض عن كسر بالشحن</td><td>150 ج.م</td><td class="mono">21/08/2026</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ---------- PRODUCTS ---------- -->
+    <section class="adm-page" id="page-products">
+      <div class="adm-topbar">
+        <div class="titles"><h1>المنتجات اليدوية</h1><p>إضافة وتعديل وحذف المنتجات وربطها بالحرفي والحرفة</p></div>
+      </div>
+      <div class="page-toolbar">
+        <button class="btn-add" onclick="openModal('modal-product')">＋ إضافة منتج</button>
+        <span style="color:var(--adm-sub);font-size:13.5px;">كل المنتجات (618)</span>
+      </div>
+      <div class="panel" style="padding:0;">
+        <table class="adm-table" style="padding:10px 10px 0;">
+          <thead><tr><th style="padding-right:20px;">الصورة</th><th>الاسم</th><th>الحرفي</th><th>الحرفة</th><th>السعر</th><th>المخزون</th><th>الحالة</th><th></th></tr></thead>
+          <tbody>
+            <tr><td style="padding-right:20px;"><div class="thumb-cell">🏺</div></td><td>مزهرية فخارية مرسومة يدوياً</td><td>ورشة أم كلثوم</td><td>فخار</td><td>380 ج.م</td><td>7</td><td><span class="status-badge active">نشط</span></td><td><button class="icon-btn ghost">تعديل</button> <button class="icon-btn danger">حذف</button></td></tr>
+            <tr><td style="padding-right:20px;"><div class="thumb-cell">🧶</div></td><td>سجادة صوف منسوجة يدوياً</td><td>نساجو نجع حمادي</td><td>نسيج</td><td>1240 ج.م</td><td>4</td><td><span class="status-badge active">نشط</span></td><td><button class="icon-btn ghost">تعديل</button> <button class="icon-btn danger">حذف</button></td></tr>
+            <tr><td style="padding-right:20px;"><div class="thumb-cell">🪵</div></td><td>صندوق خشبي مطعّم بالصدف</td><td>ورشة الأرابيسك</td><td>أعمال خشبية</td><td>720 ج.م</td><td>2</td><td><span class="status-badge processing">مخزون منخفض</span></td><td><button class="icon-btn ghost">تعديل</button> <button class="icon-btn danger">حذف</button></td></tr>
+            <tr><td style="padding-right:20px;"><div class="thumb-cell">💍</div></td><td>طقم مجوهرات فضة وفيروز</td><td>مشغولات سيناء</td><td>مجوهرات</td><td>650 ج.م</td><td>11</td><td><span class="status-badge active">نشط</span></td><td><button class="icon-btn ghost">تعديل</button> <button class="icon-btn danger">حذف</button></td></tr>
+            <tr><td style="padding-right:20px;"><div class="thumb-cell">👜</div></td><td>حقيبة جلد مدبوغة يدوياً</td><td>دباغة خان الخليلي</td><td>جلود</td><td>980 ج.م</td><td>0</td><td><span class="status-badge cancelled">متوقف</span></td><td><button class="icon-btn ghost">تعديل</button> <button class="icon-btn danger">حذف</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ---------- CATEGORIES ---------- -->
+    <section class="adm-page" id="page-categories">
+      <div class="adm-topbar">
+        <div class="titles"><h1>الحِرف والأقسام</h1><p>إدارة تصنيفات الحرف اليدوية الرئيسية والفرعية</p></div>
+      </div>
+      <div class="page-toolbar">
+        <button class="btn-add" onclick="openModal('modal-category')">＋ إضافة قسم</button>
+        <span style="color:var(--adm-sub);font-size:13.5px;">كل الأقسام (11)</span>
+      </div>
+      <div class="panel" style="padding:0;">
+        <table class="adm-table" style="padding:10px 10px 0;">
+          <thead><tr><th style="padding-right:20px;">الصورة</th><th>اسم القسم</th><th>القسم الأب</th><th>الحالة</th><th></th></tr></thead>
+          <tbody>
+            <tr><td style="padding-right:20px;"><div class="thumb-cell">🏺</div></td><td>فخار وسيراميك</td><td>—</td><td><span class="status-badge active">نشط</span></td><td><button class="icon-btn ghost">تعديل</button> <button class="icon-btn danger">حذف</button></td></tr>
+            <tr><td style="padding-right:20px;"><div class="thumb-cell">🧶</div></td><td>نسيج وسجاد</td><td>—</td><td><span class="status-badge active">نشط</span></td><td><button class="icon-btn ghost">تعديل</button> <button class="icon-btn danger">حذف</button></td></tr>
+            <tr><td style="padding-right:20px;"><div class="thumb-cell">🪵</div></td><td>أعمال خشبية مطعّمة</td><td>أعمال خشبية</td><td><span class="status-badge active">نشط</span></td><td><button class="icon-btn ghost">تعديل</button> <button class="icon-btn danger">حذف</button></td></tr>
+            <tr><td style="padding-right:20px;"><div class="thumb-cell">💍</div></td><td>مجوهرات يدوية</td><td>—</td><td><span class="status-badge active">نشط</span></td><td><button class="icon-btn ghost">تعديل</button> <button class="icon-btn danger">حذف</button></td></tr>
+            <tr><td style="padding-right:20px;"><div class="thumb-cell">🕯</div></td><td>ديكور منزلي</td><td>—</td><td><span class="status-badge cancelled">متوقف</span></td><td><button class="icon-btn ghost">تعديل</button> <button class="icon-btn danger">حذف</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ---------- OFFERS ---------- -->
+    <section class="adm-page" id="page-offers">
+      <div class="adm-topbar">
+        <div class="titles"><h1>العروض والخصومات</h1><p>إنشاء وإدارة أكواد الخصم وعروض السوق</p></div>
+      </div>
+      <div class="page-toolbar">
+        <button class="btn-add" onclick="openModal('modal-offer')">＋ إضافة عرض</button>
+        <span style="color:var(--adm-sub);font-size:13.5px;">كل العروض (7)</span>
+      </div>
+      <div class="panel" style="padding:0;">
+        <table class="adm-table" style="padding:10px 10px 0;">
+          <thead><tr><th style="padding-right:20px;">الكود</th><th>نوع الخصم</th><th>القيمة</th><th>الحد الأدنى للطلب</th><th>الاستخدام</th><th>ينتهي في</th><th>الحالة</th></tr></thead>
+          <tbody>
+            <tr><td class="mono" style="padding-right:20px;">CLAY20</td><td>نسبة %</td><td>20%</td><td>300 ج.م</td><td>64/300</td><td class="mono">30/08/2026</td><td><span class="status-badge active">نشط</span></td></tr>
+            <tr><td class="mono" style="padding-right:20px;">WELCOME30</td><td>مبلغ ثابت</td><td>30 ج.م</td><td>—</td><td>—</td><td class="mono">01/12/2026</td><td><span class="status-badge active">نشط</span></td></tr>
+            <tr><td class="mono" style="padding-right:20px;">EID25</td><td>نسبة %</td><td>25%</td><td>—</td><td>—</td><td class="mono">15/07/2026</td><td><span class="status-badge expired">منتهي</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ---------- ARTISANS ---------- -->
+    <section class="adm-page" id="page-artisans">
+      <div class="adm-topbar">
+        <div class="titles"><h1>الحرفيون</h1><p>إدارة حسابات الحرفيين والورش المسجلة على المنصة ومنتجاتهم</p></div>
+      </div>
+      <div class="page-toolbar">
+        <input class="filter-input" placeholder="بحث بالاسم أو الورشة أو المحافظة...">
+        <span style="color:var(--adm-sub);font-size:13.5px;">كل الحرفيين (142)</span>
+      </div>
+      <div class="panel" style="padding:0;">
+        <table class="adm-table" style="padding:10px 10px 0;">
+          <thead><tr><th style="padding-right:20px;">اسم الورشة</th><th>الحرفي</th><th>الحرفة</th><th>المحافظة</th><th>المنتجات</th><th>الحالة</th><th></th></tr></thead>
+          <tbody>
+            <tr><td style="padding-right:20px;">ورشة أم كلثوم</td><td>فاطمة عبدالله</td><td>فخار وسيراميك</td><td>الفيوم</td><td>18</td><td><span class="status-badge active">نشط</span></td><td><button class="icon-btn ghost">عرض</button></td></tr>
+            <tr><td style="padding-right:20px;">نساجو نجع حمادي</td><td>حسن إبراهيم</td><td>نسيج وسجاد</td><td>قنا</td><td>9</td><td><span class="status-badge active">نشط</span></td><td><button class="icon-btn ghost">عرض</button></td></tr>
+            <tr><td style="padding-right:20px;">ورشة الأرابيسك</td><td>محمود سعيد</td><td>أعمال خشبية</td><td>دمياط</td><td>26</td><td><span class="status-badge paused">قيد المراجعة</span></td><td><button class="icon-btn ghost">عرض</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ---------- CUSTOMERS ---------- -->
+    <section class="adm-page" id="page-customers">
+      <div class="adm-topbar">
+        <div class="titles"><h1>العملاء</h1><p>عرض بيانات العملاء المسجلين، طلباتهم، وحالة حساباتهم</p></div>
+      </div>
+      <div class="page-toolbar">
+        <input class="filter-input" placeholder="بحث بالاسم أو البريد الإلكتروني...">
+        <span style="color:var(--adm-sub);font-size:13.5px;">كل العملاء (5,218)</span>
+      </div>
+      <div class="panel" style="padding:0;">
+        <table class="adm-table" style="padding:10px 10px 0;">
+          <thead><tr><th style="padding-right:20px;">الاسم</th><th>البريد الإلكتروني</th><th>الهاتف</th><th>رصيد المحفظة</th><th>تاريخ التسجيل</th><th>الحالة</th><th></th></tr></thead>
+          <tbody>
+            <tr><td style="padding-right:20px;">نهى سامي</td><td class="mono">noha.s@mail.com</td><td class="mono">01098765432</td><td>140 ج.م</td><td class="mono">14/03/2026</td><td><span class="status-badge active">نشط</span></td><td><button class="icon-btn ghost" onclick="openModal('modal-customer')">عرض</button> <button class="icon-btn danger">إيقاف</button></td></tr>
+            <tr><td style="padding-right:20px;">يوسف عادل</td><td class="mono">yousef.a@mail.com</td><td class="mono">—</td><td>—</td><td class="mono">02/01/2026</td><td><span class="status-badge active">نشط</span></td><td><button class="icon-btn ghost" onclick="openModal('modal-customer')">عرض</button> <button class="icon-btn danger">إيقاف</button></td></tr>
+            <tr><td style="padding-right:20px;">عبدالرحمن</td><td class="mono">abdo.r@mail.com</td><td class="mono">—</td><td>—</td><td class="mono">28/11/2025</td><td><span class="status-badge paused">موقوف</span></td><td><button class="icon-btn ghost" onclick="openModal('modal-customer')">عرض</button> <button class="icon-btn primary">تفعيل</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ---------- TEAM ---------- -->
+    <section class="adm-page" id="page-team">
+      <div class="adm-topbar">
+        <div class="titles"><h1>فريق التحكم والصلاحيات</h1><p>إدارة حسابات الموظفين وتحديد ما يمكن لكل منهم الوصول إليه</p></div>
+      </div>
+      <div class="page-toolbar">
+        <button class="btn-add" onclick="openModal('modal-team')">＋ إضافة عضو</button>
+        <span style="color:var(--adm-sub);font-size:13.5px;">أعضاء الفريق (4)</span>
+      </div>
+      <div class="panel" style="padding:0;">
+        <table class="adm-table" style="padding:10px 10px 0;">
+          <thead><tr><th style="padding-right:20px;">الاسم</th><th>البريد</th><th>الدور</th><th>الحالة</th><th></th></tr></thead>
+          <tbody>
+            <tr><td style="padding-right:20px;">Super Admin</td><td class="mono">admin@ayadina.com</td><td>مدير عام</td><td><span class="status-badge active">نشط</span></td><td><span style="color:var(--adm-sub);font-size:12px;">الحساب الرئيسي</span></td></tr>
+            <tr><td style="padding-right:20px;">مريم توفيق</td><td class="mono">mariam@ayadina.com</td><td>مسؤولة الحرفيين</td><td><span class="status-badge active">نشط</span></td><td><button class="icon-btn danger">حذف</button></td></tr>
+            <tr><td style="padding-right:20px;">أحمد جلال</td><td class="mono">ahmed@ayadina.com</td><td>دعم فني</td><td><span class="status-badge active">نشط</span></td><td><button class="icon-btn danger">حذف</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ---------- SETTINGS ---------- -->
+    <section class="adm-page" id="page-settings">
+      <div class="adm-topbar">
+        <div class="titles"><h1>الإعدادات</h1><p>الإعدادات العامة للسوق، الشحن، الضرائب، وطرق الدفع المفعّلة</p></div>
+      </div>
+      <div class="panel" style="margin-bottom:16px;">
+        <h3>بيانات السوق</h3>
+        <div class="form-grid">
+          <div class="field"><label>اسم المتجر</label><input value="أيادينا"></div>
+          <div class="field"><label>العملة</label><input value="EGP"></div>
+          <div class="field"><label>البريد الإلكتروني الرسمي</label><input value="support@ayadina.com"></div>
+          <div class="field"><label>رقم الهاتف</label><input value="0122334455"></div>
+        </div>
+      </div>
+      <div class="panel" style="margin-bottom:16px;">
+        <h3>الشحن والضرائب</h3>
+        <div class="form-grid">
+          <div class="field"><label>نسبة الضريبة (%)</label><input value="10"></div>
+          <div class="field"><label>رسوم الشحن الافتراضية (ج.م)</label><input value="55"></div>
+          <div class="field"><label>حد الشحن المجاني (ج.م)</label><input value="500"></div>
+        </div>
+      </div>
+      <div class="panel" style="margin-bottom:16px;">
+        <h3>عمولة المنصة على الحرفيين</h3>
+        <div class="form-grid">
+          <div class="field"><label>نسبة العمولة (%)</label><input value="12"></div>
+          <div class="field"><label>الحد الأدنى للسحب (ج.م)</label><input value="200"></div>
+        </div>
+      </div>
+      <div class="panel" style="margin-bottom:16px;">
+        <h3>طرق الدفع المفعّلة</h3>
+        <div class="checks">
+          <label><input type="checkbox" checked> بطاقة ائتمان (Stripe)</label>
+          <label><input type="checkbox" checked> المحفظة الإلكترونية</label>
+          <label><input type="checkbox"> الدفع عند الاستلام</label>
+        </div>
+      </div>
+      <button class="btn-add">حفظ الإعدادات</button>
+    </section>
+
+  </main>
+</div>
+</div>
+
+<!-- =========================================================
+     MODALS
+========================================================== -->
+<div class="modal-overlay" id="modal-wallet">
+  <div class="modal">
+    <div class="modal-head"><h3>تسوية رصيد محفظة — نهى سامي</h3><span class="modal-close" onclick="closeModal('modal-wallet')">✕</span></div>
+    <div class="form-grid full">
+      <div class="field"><label>نوع العملية</label><select><option>إضافة رصيد</option><option>خصم رصيد</option></select></div>
+      <div class="field"><label>المبلغ (ج.م)</label><input value="150"></div>
+      <div class="field"><label>السبب</label><input value="تعويض عن كسر بالشحن"></div>
+    </div>
+    <button class="modal-submit">تأكيد العملية</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-product">
+  <div class="modal">
+    <div class="modal-head"><h3>إضافة منتج يدوي جديد</h3><span class="modal-close" onclick="closeModal('modal-product')">✕</span></div>
+    <div class="form-grid full">
+      <div class="field"><label>اسم المنتج</label><input placeholder="مزهرية فخارية مرسومة يدوياً"></div>
+    </div>
+    <div class="form-grid">
+      <div class="field"><label>الحرفة</label><select><option>فخار وسيراميك</option></select></div>
+      <div class="field"><label>الحرفي / الورشة</label><select><option>ورشة أم كلثوم</option></select></div>
+    </div>
+    <div class="form-grid">
+      <div class="field"><label>السعر</label><input placeholder="380"></div>
+      <div class="field"><label>المخزون</label><input placeholder="7"></div>
+    </div>
+    <button class="modal-submit" onclick="closeModal('modal-product')">إضافة المنتج</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-category">
+  <div class="modal">
+    <div class="modal-head"><h3>إضافة قسم جديد</h3><span class="modal-close" onclick="closeModal('modal-category')">✕</span></div>
+    <div class="form-grid full">
+      <div class="field"><label>اسم القسم</label><input placeholder="ديكور منزلي"></div>
+      <div class="field"><label>القسم الأب (اختياري)</label><select><option>بدون</option></select></div>
+      <div class="field"><label>صورة القسم</label><input type="file"></div>
+    </div>
+    <button class="modal-submit" onclick="closeModal('modal-category')">إضافة القسم</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-offer">
+  <div class="modal">
+    <div class="modal-head"><h3>إضافة عرض / كود خصم</h3><span class="modal-close" onclick="closeModal('modal-offer')">✕</span></div>
+    <div class="form-grid">
+      <div class="field"><label>كود الخصم</label><input placeholder="CLAY20"></div>
+      <div class="field"><label>نوع الخصم</label><select><option>نسبة مئوية %</option><option>مبلغ ثابت</option></select></div>
+      <div class="field"><label>قيمة الخصم</label><input placeholder="20"></div>
+      <div class="field"><label>تاريخ الانتهاء</label><input placeholder="30/08/2026"></div>
+    </div>
+    <button class="modal-submit" onclick="closeModal('modal-offer')">إضافة العرض</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-team">
+  <div class="modal">
+    <div class="modal-head"><h3>إضافة عضو جديد للفريق</h3><span class="modal-close" onclick="closeModal('modal-team')">✕</span></div>
+    <div class="form-grid">
+      <div class="field"><label>الاسم</label><input placeholder="مريم توفيق"></div>
+      <div class="field"><label>البريد الإلكتروني</label><input placeholder="mariam@ayadina.com"></div>
+      <div class="field"><label>الدور</label><select><option>مسؤول الحرفيين</option></select></div>
+      <div class="field"><label>كلمة المرور</label><input type="password" placeholder="••••••••"></div>
+    </div>
+    <label style="font-size:12.5px;font-weight:700;color:var(--adm-sub);display:block;margin-bottom:10px;">الصلاحيات</label>
+    <div class="checks" style="margin-bottom:18px;">
+      <label><input type="checkbox" checked> إدارة المنتجات</label>
+      <label><input type="checkbox" checked> إدارة الأقسام</label>
+      <label><input type="checkbox" checked> إدارة الطلبات</label>
+      <label><input type="checkbox"> إدارة المدفوعات والمحافظ</label>
+      <label><input type="checkbox" checked> إدارة الحرفيين</label>
+      <label><input type="checkbox" checked> إدارة العملاء</label>
+      <label><input type="checkbox"> إدارة الفريق</label>
+      <label><input type="checkbox"> إدارة الإعدادات</label>
+    </div>
+    <button class="modal-submit" onclick="closeModal('modal-team')">إضافة العضو</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-customer">
+  <div class="modal">
+    <div class="modal-head"><h3>نهى سامي</h3><span class="modal-close" onclick="closeModal('modal-customer')">✕</span></div>
+    <p style="color:var(--adm-sub);font-size:13px;margin-top:-8px;">noha.s@mail.com · رصيد المحفظة: 140 ج.م</p>
+    <h3 style="margin-top:18px;">طلبات العميل (4)</h3>
+    <table class="adm-table">
+      <thead><tr><th>رقم الطلب</th><th>الإجمالي</th><th>الحالة</th></tr></thead>
+      <tbody><tr><td class="mono">CR-4821</td><td>380 ج.م</td><td>processing</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+function showApp(which){
+  document.getElementById('store').classList.toggle('active', which==='store');
+  document.getElementById('admin').classList.toggle('active', which==='admin');
+  document.getElementById('btn-store').classList.toggle('active', which==='store');
+  document.getElementById('btn-admin').classList.toggle('active', which==='admin');
+}
+function showAdminPage(id, el){
+  document.querySelectorAll('.adm-page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.adm-nav-item').forEach(n=>n.classList.remove('active'));
+  el.classList.add('active');
+}
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(ov=>{
+  ov.addEventListener('click', e=>{ if(e.target===ov) ov.classList.remove('open'); });
+});
+</script>
+
+</body>
+</html>
