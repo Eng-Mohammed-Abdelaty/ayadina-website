@@ -6,549 +6,14 @@
 <title>أيادينا | سوق الحِرف اليدوية</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Amiri:wght@700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    /* Storefront tokens - warm artisan palette */
-    --clay-900:#3B2416;
-    --clay-800:#4E2F1C;
-    --clay-700:#6B3F24;
-    --terracotta:#C1622D;
-    --terracotta-dk:#A94F20;
-    --olive:#6E7C4E;
-    --sand:#FBF4E9;
-    --sand-2:#F3E7D5;
-    --cream:#FFFDF8;
-    --ink-900:#2B2118;
-    --ink-600:#6B5D4F;
-    --ink-400:#9C8D7C;
-    --line:#E9DCC7;
-    --white:#FFFFFF;
 
-    /* Admin tokens */
-    --adm-bg:#F7F3EC;
-
-
-    --adm-sidebar-1:#2C1B10;
-    --adm-sidebar-2:#160D07;
-    --adm-accent:#C1622D;
-    --adm-accent-dim:#F7E4D5;
-    --adm-text:#2B2118;
-    --adm-sub:#8F8072;
-    --ok-fg:#4C7A3D; --ok-bg:#E4F0DE;
-    --info-fg:#3B6E93; --info-bg:#DFEBF3;
-    --warn-fg:#B4780F; --warn-bg:#FBECD1;
-    --bad-fg:#B23B2E; --bad-bg:#F8DFDA;
-
-    --radius-sm:8px;
-    --radius-md:14px;
-    --radius-lg:22px;
-    --shadow-sm: 0 1px 2px rgba(59,36,22,.07);
-    --shadow-md: 0 10px 26px rgba(59,36,22,.10);
-    --shadow-lg: 0 24px 54px rgba(59,36,22,.20);
-  }
-  *{box-sizing:border-box;
-    margin: 0;
-    padding: 0;
-  }
-  /*html,body{margin:0;padding:0;}*/
-  body{
-    direction: rtl; /* For RTL languages */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif/*var(--font-family)*/;
-    background:var(--sand);
-
-    color:var(--ink-900);
-    -webkit-font-smoothing:antialiased;
-    line-height: 1.6;
-    text-align: right;
-}
-
-  img{max-width:100%;display:block;}
-  button{font-family:inherit;cursor:pointer;border:none;}
-  input,select{font-family:inherit;}
-  a{color:inherit;text-decoration:none;}
-  .mono{font-family:'JetBrains Mono',monospace;}
-  .serif{font-family:'Amiri',serif;}
-
-  .switcher{
-    position:fixed;top:14px;left:14px;z-index:999;
-    display:flex;gap:6px;background:var(--white);
-    padding:5px;border-radius:999px;box-shadow:var(--shadow-lg);
-    border:1px solid var(--line);
-  }
-  .switcher button{
-    padding:9px 18px;border-radius:999px;font-weight:700;font-size:13.5px;
-    background:transparent;color:var(--ink-600);transition:.2s;
-  }
-  .switcher button.active{background:var(--clay-900);color:#fff;}
-  .switcher button:not(.active):hover{background:var(--sand-2);}
-
-  .view{display:none;}
-  .view.active{display:block;}
-
-  /* ============================================================
-     STOREFRONT
-  ============================================================ */
-  #store{background:var(--sand);min-height:100vh;}
-
-  .topbar{
-    background:var(--clay-900);color:#e4d3c1;font-size:12.5px;
-    padding:8px 40px;display:flex;justify-content:space-between;
-  }
-  .topbar .links{/*display:flex;*/gap:22px;}
-  .topbar .links span.hot{color:var(--terracotta);font-weight:700;}
-
-  .header{
-    background:var(--cream);padding:18px 40px;border-bottom:1px solid var(--line);
-    display:flex;align-items:center;gap:22px;
-
-  }
-  .logo{font-size:27px;font-weight:900;color:var(--clay-900);letter-spacing:-.5px;font-family:'Amiri',serif;}
-  .logo span{color:var(--terracotta);}
-  .cart-pill .badge{
-    background:var(--terracotta);
-    gap:8px;
-    padding:5px 10px;
-    color:#fff;
-    width:20px;
-    height:20px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:11px;
-    font-weight:800;
-  }
-  .acct{color:var(--ink-600);font-size:13px;line-height:1.5;}
-  .acct b{color:var(--ink-900);display:block;font-size:13.5px;}
-  .icon{
-    width: 35px;
-    height: 35px;
-  }
-  .search-wrap{
-    flex:1;
-    display:flex;
-  }
-  .search-wrap select{
-    background:var(--sand-2);color:var(--ink-600);border:1px solid var(--line);
-    border-radius:10px 0 0 10px;padding:0 14px;font-size:13px;border-right:none;
-  }
-  .search-wrap input{
-    flex:1;border:1px solid var(--line);border-right:none;border-left:none;padding:12px 16px;font-size:14px;background:#fff;
-    color:var(--ink-900);
-  }
-  .search-wrap input::placeholder{color:var(--ink-400);}
-  .search-wrap button{
-    background:var(--terracotta);color:#fff;padding:0 26px;
-    border-radius:0 10px 10px 0;font-weight:800;font-size:14px;
-  }
-
-  .navbar{
-    background:var(--clay-800);
-    padding:0 40px;
-    display:flex;
-    align-items:center;
-    gap:2px;
-    width: 100%;
-  }
-  .navbar a{
-    text-decoration: none;
-    display: block;
-    line-height: 40px;
-    padding:14px 18px;
-    color:#ecdfd0;
-    font-size:16px;
-    font-weight:700;
-    border-radius:4px;
-    transition:.15s;
-    white-space:nowrap;
-  }
-  .navbar a:hover{background:rgba(255,255,255,.07);}
-  .navbar a.deal{color:var(--terracotta);}
-  .navbar .all-cats{
-    background:var(--terracotta);
-    color:#fff;
-    padding:11px 22px;
-    font-weight:500;
-    border-radius:4px;
-  }
-
-  .hero-section{
-    display:grid;grid-template-columns:340px 1fr;gap:24px;
-    padding:28px 40px;
-  }
-  .promo-stack{display:flex;flex-direction:column;gap:16px;}
-  .promo-card{
-    background:#fff;border:1px solid var(--line);border-radius:var(--radius-md);
-    padding:20px;box-shadow:var(--shadow-sm);
-  }
-  .promo-card h4{margin:0 0 6px;font-size:16px;font-weight:800;}
-  .promo-card p{margin:0 0 10px;color:var(--ink-600);font-size:13px;}
-  .promo-card .cta{color:var(--terracotta-dk);font-weight:700;font-size:13px;}
-
-  .hero-banner{
-    background-image: url(img/img1.png);
-    background-repeat: no-repeat;
-    background-position: center top;
-    background-size: cover;
-    border-radius:var(--radius-lg);
-    border-radius: 35px;
-    width: 100%;
-    aspect-ratio: 25 / 9;
-    display: block;
-    align-items: center;
-    text-align: right;
-    padding:20px;
-    flex-direction:column;
-    justify-content:center;
-    position:relative;
-    overflow:hidden;
-    box-sizing: border-box;
-  }
-  .hero-banner::after{
-    position: absolute;
-    left:-60px;
-    bottom:-80px;
-    width:280px;
-    height:280px;
-  }
-
-  .hero-banner h1{
-    color:#fff;
-    font-size:40px;
-    margin: 0px;
-    font-weight: bold;
-    line-height:1.5;
-    max-width:530px;
-    text-shadow: 1px 1px 5px rgba(0,0,0,.5);
-  }
-  @media (max-width: 768px) {
-    .hero-banner h1 {
-        font-size: 20px;
-    }
-    .hero-banner{
-      min-height: 180px;
-    }
-}
-
-  .hero-banner p{
-    margin:0;
-    color:#e2d1bd;
-    max-width:480px;
-    font-size:15px;
-    margin: 20px;
-}
-  @media (max-width: 570px) {
-    .hero-cta, .read_more {
-        margin-right: 3px;
-        max-width: 120px;
-        line-height: 35px;
-        font-size: 10px;
-    }
-}
-  .hero-cta{
-    font-family: sans-serif;
-  border: none;
-  outline: none;
-    align-self:flex-start;
-    background:var(--terracotta);
-    color:#fff;
-    padding:13px 26px;
-    border-radius:10px;
-    font-weight:800;
-    font-size:14px;
-    margin-top:6px;
-  }
-    .hero-cta:hover {
-    background: #da9a06;
-    color: #fff;
-    transition: ease-in all 0.5s;
-}
-.read_more{
-  font-family: sans-serif;
-  border: none;
-  outline: none;
-    align-self:flex-start;
-    color:#fff;
-    padding:11px 24px;
-    border-radius:10px;
-    font-weight:800;
-    font-size:14px;
-    margin-top:5px;
-    border: 1px solid var(--terracotta);
-  }
-  .read_more:hover {
-    background: var(--terracotta);
-    color: #fff;
-    transition: ease-in all 0.5s;
-    border: var(--terracotta) solid 2px;
-}
-
-  .section-head{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:0 40px;margin:34px 0 16px;
-  }
-  .section-head h2{font-size:20px;margin:0;font-weight:800;}
-  .section-head a{color:var(--terracotta-dk);font-size:13.5px;font-weight:700;}
-
-  .cat-grid{
-    display:grid;grid-template-columns:repeat(6,1fr);gap:16px;padding:0 40px;
-  }
-  .cat-card{
-    background:#fff;border:1px solid var(--line);border-radius:var(--radius-md);
-    padding:26px 10px;text-align:center;box-shadow:var(--shadow-sm);
-    transition:.2s;cursor:pointer;
-  }
-  .cat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
-  .cat-card .ic{
-    width:56px;height:56px;border-radius:50%;background:var(--sand-2);
-    display:flex;align-items:center;justify-content:center;margin:0 auto 12px;
-    font-size:24px;
-  }
-  .cat-card span{font-weight:700;font-size:13.5px;}
-
-  .artisan-strip{
-    margin:34px 40px 0;background:var(--olive);border-radius:var(--radius-lg);
-    padding:18px 26px;display:flex;justify-content:space-between;align-items:center;
-    color:#fff;
-  }
-  .artisan-strip .l{display:flex;align-items:center;gap:14px;}
-  .artisan-strip h3{margin:0;font-size:16px;}
-  .artisan-strip p{margin:0;color:#e4ead9;font-size:12.5px;}
-  .avatars{
-  display:flex;
-      gap:17px;
-      
-
-  }
-  .avatars .av{
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    background:#fff;
-    color:var(--olive);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:800;
-    font-size:13px;
-    border:2px solid var(--olive);
-    margin-right:-15px;
-  }
-
-  .prod-grid{
-    display:grid;grid-template-columns:repeat(5,1fr);gap:18px;padding:0 40px;
-  }
-  .prod-card{
-    background:#fff;border:1px solid var(--line);border-radius:var(--radius-md);
-    overflow:hidden;box-shadow:var(--shadow-sm);position:relative;
-    display:flex;flex-direction:column;transition:.2s;
-  }
-  .prod-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);}
-  .prod-card .tag{
-    position:absolute;top:10px;right:10px;background:var(--bad-fg);
-    color:#fff;font-size:11px;font-weight:800;padding:3px 9px;border-radius:6px;
-  }
-  .prod-card .tag.new{background:var(--olive);}
-  .prod-card .tag.hand{background:var(--terracotta);}
-  .prod-thumb{
-    height:130px;background:var(--sand-2);display:flex;align-items:center;
-    justify-content:center;font-size:42px;
-  }
-  .prod-body{
-    padding:14px 16px 16px;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    flex:1;
-  }
-  .prod-body h4{
-    margin:0;
-    font-size:15px;
-    font-weight:500px;
-    line-height:1.5;
-    min-height:7px;
-  }
-  .maker{
-    font-size:11.5px;color:var(--ink-400);}
-  .stars{color:var(--terracotta);font-size:12px;}
-  .stars span{color:var(--ink-400);font-weight:600;margin-right:4px;}
-  .price-row{display:flex;align-items:baseline;gap:8px;margin-top:auto;}
-  .price-row .now{font-size:17px;font-weight:900;color:var(--clay-900);}
-  .price-row .was{font-size:12px;color:var(--ink-400);text-decoration:line-through;}
-  .add-btn{
-    background:var(--clay-900);color:#fff;padding:10px;border-radius:8px;
-    font-weight:700;font-size:13px;text-align:center;
-  }
-  .add-btn:hover{background:var(--clay-800);}
-
-  footer{margin-top:50px;background:var(--clay-900);color:#c9b8a5;padding:44px 40px 20px;}
-  .foot-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
-  .foot-grid h5{color:#fff;font-size:14.5px;margin:0 0 14px;}
-  .foot-grid a,.foot-grid div{display:block;font-size:13px;margin-bottom:10px;color:#b2a08d;}
-  .foot-bottom{
-    margin-top:30px;padding-top:18px;border-top:1px solid rgba(255,255,255,.09);
-    font-size:12px;text-align:center;color:#8a7864;
-  }
-
-  /* ============================================================
-     ADMIN DASHBOARD
-  ============================================================ */
-  #admin{background:var(--adm-bg);}
-  #admin-inner{display:flex;min-height:100vh;}
-  .adm-sidebar{
-    width:260px;flex-shrink:0;background:linear-gradient(180deg,var(--adm-sidebar-1),var(--adm-sidebar-2));
-    color:#d6c6b4;padding:22px 0;display:flex;flex-direction:column;
-    position:sticky;top:0;height:100vh;
-  }
-  .adm-brand{display:flex;align-items:center;gap:10px;padding:0 22px 22px;
-    border-bottom:1px solid rgba(255,255,255,.09);margin-bottom:16px;}
-  .adm-brand .mark{width:34px;height:34px;border-radius:9px;background:var(--adm-accent);
-    display:flex;align-items:center;justify-content:center;font-size:16px;}
-  .adm-brand b{color:#fff;font-size:16px;font-family:'Amiri',serif;}
-  .adm-group-label{font-size:11px;color:#7a6a58;font-weight:800;letter-spacing:.06em;
-    padding:14px 22px 8px;text-transform:uppercase;}
-  .adm-nav-item{
-    display:flex;align-items:center;justify-content:space-between;gap:10px;
-    padding:11px 22px;font-size:14px;font-weight:600;color:#d6c6b4;
-    border-right:3px solid transparent;transition:.15s;
-  }
-  .adm-nav-item .lbl{display:flex;align-items:center;gap:10px;}
-  .adm-nav-item:hover{background:rgba(255,255,255,.05);}
-  .adm-nav-item.active{
-    background:rgba(193,98,45,.22);border-color:var(--adm-accent);color:#fff;
-  }
-  .adm-sidebar-foot{
-    margin-top:auto;padding:16px 22px 4px;border-top:1px solid rgba(255,255,255,.09);
-    display:flex;align-items:center;gap:10px;
-  }
-  .avatar-chip{
-    width:34px;height:34px;border-radius:50%;background:var(--adm-accent);
-    color:#fff;display:flex;align-items:center;justify-content:center;
-    font-weight:800;font-size:13px;
-  }
-  .adm-sidebar-foot div{font-size:12.5px;color:#fff;}
-  .adm-sidebar-foot small{color:#8a7a68;font-size:11px;}
-
-  .adm-main{flex:1;padding:22px 34px 60px;min-width:0;}
-  .adm-topbar{display:flex;justify-content:space-between;align-items:flex-start;
-    margin-bottom:22px;}
-  .adm-topbar .titles h1{font-size:22px;margin:0 0 4px;font-weight:800;}
-  .adm-topbar .titles p{margin:0;color:var(--adm-sub);font-size:13px;}
-  .adm-search{
-    display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);
-    border-radius:10px;padding:9px 14px;width:260px;color:var(--adm-sub);font-size:13px;
-  }
-
-  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px;}
-  .kpi-card{background:#fff;border-radius:var(--radius-md);padding:20px;
-    box-shadow:var(--shadow-sm);border:1px solid var(--line);}
-  .kpi-card .ic{width:38px;height:38px;border-radius:9px;background:var(--adm-accent-dim);
-    color:var(--adm-accent);display:flex;align-items:center;justify-content:center;
-    font-size:17px;margin-bottom:14px;}
-  .kpi-card .val{font-size:26px;font-weight:900;margin-bottom:4px;}
-  .kpi-card .lbl{font-size:12.5px;color:var(--adm-sub);margin-bottom:10px;}
-  .kpi-card .delta{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px;display:inline-block;}
-  .delta.up{color:var(--ok-fg);background:var(--ok-bg);}
-  .delta.down{color:var(--bad-fg);background:var(--bad-bg);}
-
-  .adm-grid-2{display:grid;grid-template-columns:1fr 1.6fr;gap:16px;margin-bottom:20px;}
-  .panel{background:#fff;border-radius:var(--radius-md);border:1px solid var(--line);
-    box-shadow:var(--shadow-sm);padding:20px;}
-  .panel h3{margin:0 0 14px;font-size:15px;font-weight:800;display:flex;justify-content:space-between;}
-  .panel h3 a{color:var(--adm-accent);font-size:12.5px;font-weight:700;}
-  .activity-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);}
-  .activity-item:last-child{border:none;}
-  .dot{width:8px;height:8px;border-radius:50%;margin-top:6px;flex-shrink:0;}
-  .dot.g{background:var(--ok-fg);} .dot.b{background:var(--info-fg);} .dot.r{background:var(--bad-fg);}
-  .activity-item b{display:block;font-size:13px;}
-  .activity-item small{color:var(--adm-sub);font-size:11.5px;}
-
-  .bars{display:flex;align-items:flex-end;gap:14px;height:170px;padding-top:10px;}
-  .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end;}
-  .bar-col .bar{width:100%;background:var(--adm-accent);border-radius:8px 8px 0 0;
-    opacity:.85;transition:.2s;}
-  .bar-col:hover .bar{opacity:1;}
-  .bar-col span{font-size:11.5px;color:var(--adm-sub);font-weight:700;}
-
-  table.adm-table{width:100%;border-collapse:collapse;}
-  table.adm-table th{
-    text-align:right;font-size:11.5px;color:var(--adm-sub);font-weight:800;
-    text-transform:uppercase;letter-spacing:.03em;padding:0 10px 12px;border-bottom:1px solid var(--line);
-  }
-  table.adm-table td{padding:14px 10px;font-size:13.5px;border-bottom:1px solid var(--line);}
-  table.adm-table tr:last-child td{border-bottom:none;}
-  .cust-cell{display:flex;align-items:center;gap:10px;}
-  .cust-cell .av{width:30px;height:30px;border-radius:50%;background:var(--adm-accent-dim);
-    color:var(--adm-accent);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;}
-  .status-badge{padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700;display:inline-block;}
-  .status-badge.paid{color:var(--ok-fg);background:var(--ok-bg);}
-  .status-badge.shipped{color:var(--info-fg);background:var(--info-bg);}
-  .status-badge.processing{color:var(--warn-fg);background:var(--warn-bg);}
-  .status-badge.cancelled{color:var(--bad-fg);background:var(--bad-bg);}
-  .status-badge.active{color:var(--ok-fg);background:var(--ok-bg);}
-  .status-badge.paused{color:var(--bad-fg);background:var(--bad-bg);}
-  .status-badge.expired{color:var(--adm-sub);background:#EEEAE2;}
-
-  .link-btn{color:var(--adm-accent);font-weight:700;font-size:12.5px;}
-  .icon-btn{padding:7px 14px;border-radius:8px;font-size:12.5px;font-weight:700;}
-  .icon-btn.primary{background:var(--adm-accent);color:#fff;}
-  .icon-btn.ghost{background:#fff;border:1px solid var(--line);color:var(--adm-text);}
-  .icon-btn.danger{background:var(--bad-bg);color:var(--bad-fg);}
-  .icon-btn.mini{background:var(--adm-accent-dim);color:var(--adm-accent);}
-
-  .page-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
-  .btn-add{background:var(--adm-accent);color:#fff;padding:12px 20px;border-radius:10px;
-    font-weight:700;font-size:13.5px;box-shadow:0 6px 16px rgba(193,98,45,.35);}
-  .btn-add:hover{background:var(--terracotta-dk);}
-  .filter-input{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 16px;
-    font-size:13px;min-width:260px;}
-
-  .adm-page{display:none;}
-  .adm-page.active{display:block;}
-
-  .thumb-cell{width:40px;height:40px;border-radius:8px;background:var(--adm-accent-dim);
-    display:flex;align-items:center;justify-content:center;font-size:16px;}
-
-  /* Modal */
-  .modal-overlay{
-    position:fixed;inset:0;background:rgba(43,33,24,.55);display:none;
-    align-items:center;justify-content:center;z-index:2000;backdrop-filter:blur(2px);
-  }
-  .modal-overlay.open{display:flex;}
-  .modal{
-    background:#fff;border-radius:var(--radius-lg);width:560px;max-width:92vw;
-    padding:30px 32px;box-shadow:var(--shadow-lg);max-height:88vh;overflow:auto;
-  }
-  .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;}
-  .modal-head h3{margin:0;font-size:18px;font-weight:800;}
-  .modal-close{width:32px;height:32px;border-radius:8px;background:var(--adm-bg);
-    display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--adm-sub);}
-  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
-  .form-grid.full{grid-template-columns:1fr;}
-  .field label{display:block;font-size:12.5px;font-weight:700;color:var(--adm-sub);margin-bottom:7px;}
-  .field input,.field select{
-    width:100%;border:1px solid var(--line);border-radius:9px;padding:11px 13px;
-    font-size:13.5px;color:var(--adm-text);background:#fbf9f5;
-  }
-  .field input:focus,.field select:focus{outline:2px solid var(--adm-accent);background:#fff;}
-  .checks{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px;}
-  .checks label{display:flex;align-items:center;gap:8px;}
-  .modal-submit{margin-top:8px;background:var(--adm-accent);color:#fff;padding:13px 26px;
-    border-radius:10px;font-weight:700;font-size:14px;}
-
-  @media(max-width:1100px){
-    .cat-grid,.prod-grid{grid-template-columns:repeat(3,1fr);}
-    .hero-section{grid-template-columns:1fr;}
-    .kpi-grid{grid-template-columns:repeat(2,1fr);}
-    .adm-grid-2{grid-template-columns:1fr;}
-  }
-</style>
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
 <div class="switcher">
-  <button id="btn-store" class="active" onclick="showApp('store')">🧵 المتجر</button>
-  <button id="btn-admin" onclick="showApp('admin')">🛠 لوحة التحكم</button>
+  <button id="btn-store" class="active" onclick="showApp('store')"><svg class="ui-icon"><use href="assets/images/icons/sprite.svg#icon-store"></use></svg>المتجر</button>
+  <button id="btn-admin" onclick="showApp('admin')"><svg class="ui-icon"><use href="assets/images/icons/sprite.svg#icon-admin"></use></svg>لوحة التحكم</button>
 </div>
 
 <!-- =========================================================
@@ -558,7 +23,7 @@
 
   <div class="topbar">
     <div class="links">
-      <span>🌿 كل قطعة مصنوعة يدوياً بواسطة حرفيين مصريين</span>
+      <span><svg class="ui-icon"><use href="assets/images/icons/sprite.svg#icon-leaf"></use></svg>كل قطعة مصنوعة يدوياً بواسطة حرفيين مصريين</span>
     </div>
     <div class="links">
       <span>عن أيادينا</span>
@@ -576,24 +41,24 @@
       <button>بحث</button>
     </div>
     <div class="acct">
-      <i><img src="icons/user.png" class="icon"></i>
+      <i><img src="assets/images/icons/user.png" class="icon"></i>
       <b class="">حسابي</b>
     </div>
     <div class="cart-pill"><span class="badge">2</span>
-      <i><img src="icons/Picture47.png" class="icon"></i>
+      <i><img src="assets/images/icons/Picture47.png" class="icon"></i>
         <b class="">السلة</b>
       </div>
   </div>
 
   <div class="navbar">
-    <a class="all-cats">☰ كل الحرف</a>
-    <a href="#" style="color:var(--terracotta);">قطع مميزة</a>
-    <a href="#">فخار وسيراميك</a>
-    <a href="#">نسيج وسجاد</a>
-    <a href="#">أعمال خشبية</a>
-    <a href="#">مجوهرات يدوية</a>
-    <a href="#">جلود مشغولة</a>
-    <a href="#">ديكور منزلي</a>
+    <a class="all-cats"><svg class="ui-icon"><use href="assets/images/icons/sprite.svg#icon-menu"></use></svg>كل الحرف</a>
+    <a href="#" style="color:var(--terracotta);"><svg class="ui-icon"><use href="assets/images/icons/sprite.svg#icon-star"></use></svg>قطع مميزة</a>
+    <a href="#"><svg class="ui-icon"><use href="assets/images/icons/sprite.svg#icon-pottery"></use></svg>فخار وسيراميك</a>
+    <a href="#"><svg class="ui-icon"><use href="assets/images/icons/sprite.svg#icon-textile"></use></svg>نسيج وسجاد</a>
+    <a href="#"><svg class="ui-icon"><use href="assets/images/icons/sprite.svg#icon-wood"></use></svg>أعمال خشبية</a>
+    <a href="#"><svg class="ui-icon"><use href="assets/images/icons/sprite.svg#icon-jewelry"></use></svg>مجوهرات يدوية</a>
+    <a href="#"><svg class="ui-icon"><use href="assets/images/icons/sprite.svg#icon-leather"></use></svg>جلود مشغولة</a>
+    <a href="#"><svg class="ui-icon"><use href="assets/images/icons/sprite.svg#icon-decor"></use></svg>ديكور منزلي</a>
   </div>
 
   <div class="hero-section">
@@ -610,7 +75,6 @@
       </div>
     </div>
     <div class="hero-banner">
-     <!-- <img class="img-banner" src="img/img1.png" alt="img1">-->
       <h1 class="serif">حكاية كل قطعة تُصنع بيد صانعها</h1>
       <p>فخار، نسيج، خشب، جلود ومجوهرات يدوية من ورش صغيرة في كل ربوع مصر – كل قطعة فريدة بتوقيع صانعها.</p>
       <span class="hero-cta">تسوق الآن ←</span>
@@ -620,32 +84,21 @@
 
   <div class="section-head"><h2>تسوق حسب الحرفة</h2><a href="#">عرض كل الحرف ←</a></div>
   <div class="cat-grid">
-    <div class="cat-card"><div class="ic"><img src="icons/image.png"></div><span>فخار وسيراميك</span></div>
-    <div class="cat-card"><div class="ic"><img src="icons/Background8.png"></div><span>نسيج وسجاد</span></div>
-    <div class="cat-card"><div class="ic"><img src="icons/imag2.png"></div><span>أعمال خشبية</span></div>
-    <div class="cat-card"><div class="ic"><img src="icons/Background1.png"></div><span>مجوهرات يدوية</span></div>
-    <div class="cat-card"><div class="ic"><img src="icons/Background2.png"></div><span>جلود مشغولة</span></div>
-    <div class="cat-card"><div class="ic"><img src="icons/Background10.png"></div><span>ديكور منزلي</span></div>
+    <div class="cat-card"><div class="ic">🏺</div><span>فخار وسيراميك</span></div>
+    <div class="cat-card"><div class="ic">🧶</div><span>نسيج وسجاد</span></div>
+    <div class="cat-card"><div class="ic">🪵</div><span>أعمال خشبية</span></div>
+    <div class="cat-card"><div class="ic">💍</div><span>مجوهرات يدوية</span></div>
+    <div class="cat-card"><div class="ic">👜</div><span>جلود مشغولة</span></div>
+    <div class="cat-card"><div class="ic">🕯</div><span>ديكور منزلي</span></div>
   </div>
 
   <div class="artisan-strip">
     <div class="l">
-      <span style="font-size:22px;">🤝</span>
+      <span style="font-size:22px;"><svg class="ui-icon"><use href="assets/images/icons/sprite.svg#icon-handshake"></use></svg></span>
       <div><h3>من صنع حرفيينا هذا الأسبوع</h3><p>أكثر من منتج جديد تم إضافته</p></div>
     </div>
     <div class="avatars">
-      <h4>دفع أمن</h4>
-      <div class="av">
-        <img src="icons/Background9.png">
-      </div>
-      <h4>شحن أمن وسريع</h4>
-      <div class="av">
-        <img src="icons/Background4.png">
-      </div>
-      <h4>منتجات طبيعية 100%</h4>
-      <div class="av">
-        <img src="icons/Background10.png">
-      </div>
+      <h4>دفع أمن</h4><div class="av">دفع أمن</div><h4>شحن أمن وسريع</h4><div class="av">شحن</div><h4>منتجات طبيعية 100%</h4><div class="av">منتجات</div>
     </div>
   </div>
 
@@ -653,7 +106,7 @@
   <div class="prod-grid">
     <div class="prod-card">
     <!--  <span class="tag hand">صنع يدوي</span> -->
-      <div class="prod-thumb"><img src="products/05_ceramic_vase.png"></div>
+      <div class="prod-thumb"><img src="assets/images/products/05_ceramic_vase.png"></div>
       <div class="prod-body">
         <h4>مزهرية فخارية مطبوعة يدوياً </h4>
         <div class="maker">فخار وسيراميك</div>
@@ -664,7 +117,7 @@
     </div>
     <div class="prod-card">
       <span class="tag">خصم 20%</span>
-      <div class="prod-thumb"><img src="products/04_handwoven_rug.png" alt="img2">
+      <div class="prod-thumb"><img src="assets/images/products/04_handwoven_rug.png" alt="img2">
 </div>
       <div class="prod-body">
         <h4>سجادة صوف منسوجة يدوياً</h4>
@@ -675,7 +128,7 @@
       </div>
     </div>
     <div class="prod-card">
-      <div class="prod-thumb"><img src="products/03_wooden_box.png" alt="img3"></div>
+      <div class="prod-thumb"><img src="assets/images/products/03_wooden_box.png" alt="img3"></div>
       <div class="prod-body">
         <h4>صندوق خشبي منقوش يدوياً</h4>
         <div class="maker">أعمال خشبية</div>
@@ -686,7 +139,7 @@
     </div>
     <div class="prod-card">
       <span class="tag new">جديد</span>
-      <div class="prod-thumb"><img src="products/02_ring.png" alt="img4"></div>
+      <div class="prod-thumb"><img src="assets/images/products/02_ring.png" alt="img4"></div>
       <div class="prod-body">
         <h4>خاتم فضة مطلي بالفيروز الطبيعي</h4>
         <div class="maker">مجوهرات يدوية</div>
@@ -697,7 +150,7 @@
     </div>
     <div class="prod-card">
       <span class="tag">خصم 15%</span>
-      <div class="prod-thumb"><img src="products/01_leather_bag.png" alt="img5"></div>
+      <div class="prod-thumb"><img src="assets/images/products/01_leather_bag.png" alt="img5"></div>
       <div class="prod-body">
         <h4>حقيبة جلد طبيعي منقوش يدوياً</h4>
         <div class="maker">جلود مشغولة</div>
@@ -713,7 +166,7 @@
     <div class="foot-grid">
       <div>
         <h5>طرق الدفع</h5>
-        <div>💳 فيزا / ماستركارد</div>
+        <div><svg class="ui-icon"><use href="assets/images/icons/sprite.svg#icon-card"></use></svg>فيزا / ماستركارد</div>
         <div>🔶 محافظ إلكترونية</div>
         <div>💵 الدفع عند الاستلام</div>
       </div>
@@ -743,13 +196,11 @@
       <div>
         <h5>اشترك في نشرتنا</h5>
         <a href="#">احصل علي احدث المنتجات والعروض</a>
-        <div class="input-group">
-          <input type="text" class="form-control border-white p-4" placeholder="بريدك الإلكتروني">
-          <div class="input-group-append">
-               <button class="btn btn-primary px-4">إشتراك</button>
-          </div>
-          </div>
-          <div class="col-lg-6 text-center text-lg-right">
+        <div class="search-wrap">
+      <input placeholder="بريدك الإلكتروني">
+      <button class="">اشترك</button>
+    </div>
+                <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
                     <a class="text-dark px-2" href="">
                         <i class="fab fa-facebook-f"></i>
@@ -768,7 +219,6 @@
                     </a>
                 </div>
             </div>
-      </div>
     </div>
     <div class="foot-bottom">© 2026 أيادينا – سوق الحِرف اليدوية المصرية</div>
   </footer>
@@ -822,7 +272,7 @@
     <section class="adm-page active" id="page-dashboard">
       <div class="adm-topbar">
         <div class="titles"><h1>لوحة القيادة</h1><p>نظرة عامة على أداء السوق اليوم – السبت، 29 أغسطس 2026</p></div>
-        <div class="adm-search">🔍 بحث سريع...</div>
+        <div class="adm-search"><svg class="ui-icon"><use href="assets/images/icons/sprite.svg#icon-search"></use></svg>بحث سريع...</div>
       </div>
 
       <div class="kpi-grid">
@@ -1197,25 +647,8 @@
   </div>
 </div>
 
-<script>
-function showApp(which){
-  document.getElementById('store').classList.toggle('active', which==='store');
-  document.getElementById('admin').classList.toggle('active', which==='admin');
-  document.getElementById('btn-store').classList.toggle('active', which==='store');
-  document.getElementById('btn-admin').classList.toggle('active', which==='admin');
-}
-function showAdminPage(id, el){
-  document.querySelectorAll('.adm-page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  document.querySelectorAll('.adm-nav-item').forEach(n=>n.classList.remove('active'));
-  el.classList.add('active');
-}
-function openModal(id){ document.getElementById(id).classList.add('open'); }
-function closeModal(id){ document.getElementById(id).classList.remove('open'); }
-document.querySelectorAll('.modal-overlay').forEach(ov=>{
-  ov.addEventListener('click', e=>{ if(e.target===ov) ov.classList.remove('open'); });
-});
-</script>
 
+
+  <script src="assets/js/app.js" defer></script>
 </body>
 </html>
